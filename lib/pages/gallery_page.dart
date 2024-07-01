@@ -4,6 +4,10 @@ import '/pages/homepage.dart';
 import '/pages/package_listing_page.dart';
 import '/pages/profile.dart';
 import '/widgets/gallery_card.dart';
+import 'detail_page1.dart';
+import 'detail_page2.dart';
+import 'detail_page3.dart';
+import 'detail_page4.dart';
 
 class GalleryPage extends StatefulWidget {
   @override
@@ -48,8 +52,23 @@ class _GalleryPageState extends State<GalleryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gallery', style: GoogleFonts.lato()),
+        title: Text(
+          'Gallery',
+          style: GoogleFonts.lato(),
+        ),
         backgroundColor: Colors.lightBlueAccent,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF77A6F7),
+                Color(0xFFCFDFF7),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -57,7 +76,14 @@ class _GalleryPageState extends State<GalleryPage> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.lightBlueAccent,
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF77A6F7),
+                    Color(0xFFCFDFF7),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
               child: Text(
                 'Menu',
@@ -89,7 +115,7 @@ class _GalleryPageState extends State<GalleryPage> {
             ),
             ListTile(
               leading: Icon(Icons.location_on, color: Colors.blueAccent),
-              title: Text('Locasi', style: GoogleFonts.lato()),
+              title: Text('Lokasi', style: GoogleFonts.lato()),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -117,26 +143,51 @@ class _GalleryPageState extends State<GalleryPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset('lib/assets/images/Galeri.jpg', fit: BoxFit.cover),
+            Image.asset('lib/assets/images/header_galeri.png',
+                fit: BoxFit.cover),
             GalleryCard(
-              title: 'Zahra & Jonathan',
+              title: 'Fiona & Izhar',
               location: 'Cirebon',
               rating: 4.5,
+              detailPage: DetailPage1(
+                title: 'Fiona & Izhar',
+                location: 'Cirebon',
+                rating: 4.5,
+              ),
+              imagePath: 'lib/assets/images/1/Galeri1.jpg',
             ),
             GalleryCard(
               title: 'Silvia & David',
               location: 'Kuningan',
               rating: 4.5,
+              detailPage: DetailPage2(
+                title: 'Silvia & David',
+                location: 'Kuningan',
+                rating: 4.5,
+              ),
+              imagePath: 'lib/assets/images/2/Galeri1.jpg',
             ),
             GalleryCard(
               title: 'Angela & Paquito',
               location: 'Kuningan',
               rating: 4.5,
+              detailPage: DetailPage3(
+                title: 'Angela & Paquito',
+                location: 'Kuningan',
+                rating: 4.5,
+              ),
+              imagePath: 'lib/assets/images/3/Galeri3.jpg',
             ),
             GalleryCard(
               title: 'Nana & Moskov',
               location: 'Kuningan',
               rating: 4.5,
+              detailPage: DetailPage4(
+                title: 'Nana & Moskov',
+                location: 'Kuningan',
+                rating: 4.5,
+              ),
+              imagePath: 'lib/assets/images/4/Galeri1.jpg',
             ),
           ],
         ),

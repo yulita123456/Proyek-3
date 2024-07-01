@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'homepage.dart';
 import 'gallery_page.dart';
 import 'profile.dart';
-import 'low_package_detail.dart';
-import 'medium_package_detail.dart';
-import 'high_package_detail.dart';
-import 'custom_package_detail.dart';
+import 'package:login_app/pages/package_listing_page.dart';
+import 'reservation_form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PackageListingPage extends StatefulWidget {
+class CustomPackageDetailPage extends StatefulWidget {
   @override
-  _PackageListingPageState createState() => _PackageListingPageState();
+  _CustomPackageDetailPageState createState() =>
+      _CustomPackageDetailPageState();
 }
 
-class _PackageListingPageState extends State<PackageListingPage> {
+class _CustomPackageDetailPageState extends State<CustomPackageDetailPage> {
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
@@ -139,39 +138,53 @@ class _PackageListingPageState extends State<PackageListingPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset('lib/assets/images/header_package.png',
-                fit: BoxFit.cover),
-            PackageCard(
-              title: 'Low Package',
-              description:
-                  'Pelaminan 4m\nRangkaian bunga artificial\nMini Garden\nTirai Tenda 10 m',
-              price: 'Rp. 10.000.000,-',
-              imagePath: 'lib/assets/images/low_package_image.jpg',
-              detailPage: LowPackageDetailPage(),
+            Image.asset(
+              'lib/assets/images/header_package_custom.png', // Replace with your header image path
+              fit: BoxFit.cover,
             ),
-            PackageCard(
-              title: 'Medium Package',
-              description:
-                  'Pelaminan 6m\nRangkaian bunga fresh flower\nMini Garden\nTirai Tenda 20 m',
-              price: 'Rp. 13.000.000,-',
-              imagePath: 'lib/assets/images/medium_package_image.png',
-              detailPage: MediumPackageDetailPage(),
+            SizedBox(height: 30.0), // Add spacing between header and details
+
+            Image.asset(
+                'lib/assets/images/header.png'), // Replace with your image path
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Paket Murah Meriah',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
             ),
-            PackageCard(
-              title: 'High Package',
-              description:
-                  'Pelaminan 8m\nRangkaian bunga fresh flower\nMini Garden\nTirai Tenda Jumbo dan Mini',
-              price: 'Rp. 25.000.000,-',
-              imagePath: 'lib/assets/images/high_package_image.png',
-              detailPage: HighPackageDetailPage(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Rp. 10.000.000,-',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue),
+              ),
             ),
-            PackageCard(
-              title: 'Custom',
-              description:
-                  'Pelaminan 4m/6m/8m\nPilihan Rangkaian Bunga\nKursi Meja\nTirai Tenda 10m/20m\n...',
-              price: '',
-              imagePath: 'lib/assets/images/low_package_image.jpg',
-              detailPage: CustomPackageDetailPage(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DetailItem(detail: 'Pelaminan 4m'),
+                  DetailItem(detail: 'Rangkaian bunga artificial'),
+                  DetailItem(detail: 'Mini Garden'),
+                  DetailItem(detail: 'Tirai Tenda 10 m'),
+                  // Add more package details here
+                ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ReservationFormPage()),
+                );
+              },
+              child: Text('Pesan Sekarang'),
             ),
           ],
         ),
@@ -208,69 +221,26 @@ class _PackageListingPageState extends State<PackageListingPage> {
   }
 }
 
-class PackageCard extends StatelessWidget {
-  final String title;
-  final String description;
-  final String price;
-  final String imagePath;
-  final Widget detailPage;
+class DetailItem extends StatelessWidget {
+  final String detail;
 
-  PackageCard({
-    required this.title,
-    required this.description,
-    required this.price,
-    required this.imagePath,
-    required this.detailPage,
-  });
+  DetailItem({required this.detail});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 150.0,
-              width: double.infinity,
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              title,
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              description,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        children: [
+          Icon(Icons.check, color: Colors.blue),
+          SizedBox(width: 8.0),
+          Expanded(
+            child: Text(
+              detail,
               style: TextStyle(fontSize: 16.0),
             ),
-            SizedBox(height: 10.0),
-            Text(
-              price,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
-            ),
-            SizedBox(height: 10.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => detailPage),
-                );
-              },
-              child: Text('Lihat Selengkapnya'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -278,6 +248,6 @@ class PackageCard extends StatelessWidget {
 
 void main() {
   runApp(MaterialApp(
-    home: PackageListingPage(),
+    home: CustomPackageDetailPage(),
   ));
 }

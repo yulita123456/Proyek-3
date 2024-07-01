@@ -20,14 +20,12 @@ class _HomePageState extends State<HomePage> {
     // Navigasi ke halaman yang sesuai
     switch (index) {
       case 0:
-        // Halaman Home
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
         );
         break;
       case 1:
-        // Halaman PackageListingPage
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PackageListingPage()),
@@ -43,7 +41,6 @@ class _HomePageState extends State<HomePage> {
         );
         break;
       case 4:
-        // Halaman Profile
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Profile()),
@@ -152,16 +149,17 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 'WEDDING DECORATION SERVICE',
                 style: GoogleFonts.lato(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent),
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                'Rifas Decoration adalah suatu perusahaan yang bergerak dalam bidang Dekorasi Pernikahan (Wedding Decoration), disamping itu kami tidak hanya menyediakan Jasa dalam bidang Dekorasi Pernikahan saja, tetapi juga menyediakan jasa Paket Pernikahan (Wedding Package) dan juga jasa Wedding Organizer maupun Wedding Planner yang dalam istilahnya disebut dengan "One-Stop Wedding". Perusahaan kami telah berdiri lebih dari 12 tahun dan kami telah melayani lebih dari 16,000 event di hampir seluruh wilayah dalam lokasi di Jakarta. Dalam kurun waktu tersebut, kami telah bekerja sama lebih dari 30 wedding Venue di Jakarta, meliputi Gedung Pertemuan, Hotel, maupun Lokasi Outdoor di Jakarta. Dan kampiun juga melayani Event Event diluar Jakarta, seperti Bandung, Natuna, Bali, Dsb.',
-                textAlign: TextAlign.center,
+                'Rifas Decoration adalah suatu perusahaan yang bergerak dalam bidang Dekorasi Pernikahan (Wedding Decoration). Selain itu, kami juga menyediakan Jasa Paket Pernikahan (Wedding Package) serta jasa Wedding Organizer dan Wedding Planner yang disebut dengan "One-Stop Wedding". Perusahaan kami telah berdiri lebih dari 5 tahun dan kami telah melayani lebih dari 1000 acara di hampir seluruh wilayah Indramayu. Kami bekerja sama dengan lebih dari 30 wedding venue di Indramayu, termasuk gedung, hotel, dan lokasi outdoor.',
+                textAlign: TextAlign.justify,
                 style: GoogleFonts.lato(fontSize: 16.0, color: Colors.black54),
               ),
             ),
@@ -199,6 +197,14 @@ class _HomePageState extends State<HomePage> {
                         'lib/assets/images/gallery_image_3.png',
                         fit: BoxFit.cover,
                       ),
+                      Image.asset(
+                        'lib/assets/images/2/Galeri12.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                      Image.asset(
+                        'lib/assets/images/header.png',
+                        fit: BoxFit.cover,
+                      ),
                     ],
                   ),
                   Positioned(
@@ -222,7 +228,12 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 10.0),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GalleryPage()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.lightBlueAccent,
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -235,9 +246,10 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 'PACKAGE',
                 style: GoogleFonts.lato(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
               ),
             ),
             PackageCard(
@@ -248,14 +260,14 @@ class _HomePageState extends State<HomePage> {
               price: 'Rp. 10.000.000,-',
             ),
             PackageCard(
-              imagePath: 'lib/assets/images/low_package_image.jpg',
+              imagePath: 'lib/assets/images/medium_package_image.png',
               title: 'Medium Package',
               description:
                   'Pelaminan 6m\nRangkaian bunga fresh flower\nMini Garden\nTirai Tenda 20 m',
               price: 'Rp. 13.000.000,-',
             ),
             PackageCard(
-              imagePath: 'lib/assets/images/low_package_image.jpg',
+              imagePath: 'lib/assets/images/high_package_image.png',
               title: 'High Package',
               description:
                   'Pelaminan 8m\nRangkaian bunga fresh flower\nMini Garden\nTirai Tenda Jumbo dan Mini',
@@ -297,8 +309,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.lightBlueAccent,
         unselectedItemColor: Colors.grey,
-        onTap:
-            _onItemTapped, // Panggil fungsi _onItemTapped ketika item ditekan
+        onTap: _onItemTapped,
       ),
     );
   }
@@ -310,11 +321,12 @@ class PackageCard extends StatelessWidget {
   final String price;
   final String imagePath;
 
-  PackageCard(
-      {required this.title,
-      required this.description,
-      required this.price,
-      required this.imagePath});
+  PackageCard({
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.imagePath,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -335,22 +347,27 @@ class PackageCard extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.lato(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+              ),
             ),
             SizedBox(height: 10.0),
             Text(
               description,
-              style: GoogleFonts.lato(fontSize: 16.0, color: Colors.black54),
+              style: GoogleFonts.lato(
+                fontSize: 16.0,
+                color: Colors.black54,
+              ),
             ),
             SizedBox(height: 10.0),
             Text(
               price,
               style: GoogleFonts.lato(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlueAccent),
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.lightBlueAccent,
+              ),
             ),
             SizedBox(height: 10.0),
             ElevatedButton(

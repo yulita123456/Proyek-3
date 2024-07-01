@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'homepage.dart';
 import 'package_listing_page.dart';
 import 'profile.dart';
 import 'gallery_page.dart';
 
-class DetailPage extends StatefulWidget {
+class DetailPage4 extends StatefulWidget {
   final String title;
   final String location;
   final double rating;
 
-  DetailPage(
+  DetailPage4(
       {required this.title, required this.location, required this.rating});
 
   @override
-  _DetailPageState createState() => _DetailPageState();
+  _DetailPage4State createState() => _DetailPage4State();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _DetailPage4State extends State<DetailPage4> {
   int _selectedIndex = 3; // Set to the index of the Gallery page
+  final List<String> imagePaths = List.generate(
+    12,
+    (index) =>
+        'lib/assets/images/4/Galeri${index + 1}.jpg', // Generate paths for Galeri1.jpg, Galeri2.jpg, ..., Galeri20.jpg
+  );
 
   void _onItemTapped(int index) {
     setState(() {
@@ -55,17 +62,57 @@ class _DetailPageState extends State<DetailPage> {
     }
   }
 
+  void _showZoomableImage(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(),
+          body: PhotoViewGallery.builder(
+            itemCount: imagePaths.length,
+            builder: (context, index) {
+              return PhotoViewGalleryPageOptions(
+                imageProvider: AssetImage(imagePaths[index]),
+                minScale: PhotoViewComputedScale.contained * 0.8,
+                maxScale: PhotoViewComputedScale.covered * 2,
+              );
+            },
+            scrollPhysics: BouncingScrollPhysics(),
+            backgroundDecoration: BoxDecoration(color: Colors.black),
+            pageController: PageController(initialPage: index),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail', style: GoogleFonts.lato()),
+        title: Text(
+          'Gallery',
+          style: GoogleFonts.lato(),
+        ),
         backgroundColor: Colors.lightBlueAccent,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF77A6F7),
+                Color(0xFFCFDFF7),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset('lib/assets/images/Galeri.jpg', fit: BoxFit.cover),
+            Image.asset('lib/assets/images/header_galeri_4.png',
+                fit: BoxFit.cover),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(
@@ -74,9 +121,10 @@ class _DetailPageState extends State<DetailPage> {
                   Text(
                     widget.title,
                     style: GoogleFonts.lato(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent),
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    ),
                   ),
                   SizedBox(height: 10.0),
                   Text(
@@ -97,10 +145,23 @@ class _DetailPageState extends State<DetailPage> {
                     ],
                   ),
                   SizedBox(height: 10.0),
-                  Text(
-                    'Isi foto galeri',
-                    style:
-                        GoogleFonts.lato(fontSize: 16.0, color: Colors.black),
+                  SizedBox(height: 10.0),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 4.0,
+                      mainAxisSpacing: 4.0,
+                    ),
+                    itemCount: imagePaths.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () => _showZoomableImage(context, index),
+                        child:
+                            Image.asset(imagePaths[index], fit: BoxFit.cover),
+                      );
+                    },
                   ),
                 ],
               ),
